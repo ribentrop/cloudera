@@ -22,6 +22,12 @@ service sshd restart
 # Step 1: Configure a Repository for Cloudera Manager
 # Step 2: Install JDK
 # Step 3: Install Cloudera Manager Server
+### Install Cloudera Manager Packages
+On the Cloudera Manager Server host, type the following commands to install the Cloudera Manager packages.
+```sh
+sudo yum install cloudera-manager-daemons cloudera-manager-agent cloudera-manager-server
+```
+
 # Step 4: Install and Configure Databases
 ### Installing PostgreSQL Server
 ```sh
