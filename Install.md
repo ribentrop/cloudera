@@ -20,7 +20,15 @@ service sshd restart
 
 
 # Step 1: Configure a Repository for Cloudera Manager
+```sh
+sudo yum install wget
+sudo wget https://archive.cloudera.com/cm6/6.3.1/redhat7/yum/cloudera-manager.repo -P /etc/yum.repos.d/
+sudo rpm --import https://archive.cloudera.com/cm6/6.3.1/redhat7/yum/RPM-GPG-KEY-cloudera
+```
 # Step 2: Install JDK
+```sh
+sudo yum install oracle-j2sdk1.8 # Install JDK
+```
 # Step 3: Install Cloudera Manager Server
 ### Install Cloudera Manager Packages
 On the Cloudera Manager Server host, type the following commands to install the Cloudera Manager packages.
@@ -69,6 +77,14 @@ If the default pg_hba.conf file contains the following line:
 host all all 127.0.0.1/32 ident
 ```
 then the host line specifying md5 authentication shown above must be inserted before this ident line.
+```sh
+sudo vi /var/lib/pgsql/data/pg_hba.conf
+```
+ALLOW REMOTE CONNECTIONS:
+```sh
+sudo vi /var/lib/pgsql/data/postgresql.conf
+listen_addresses = '*'
+```
 3. Configure the PostgreSQL server to start at boot.
 ```sh
 sudo systemctl enable postgresql
@@ -78,6 +94,10 @@ Restart the PostgreSQL database:
 sudo systemctl restart postgresql
 ```
 ### Creating Databases for Cloudera Software
+МОЖНО ВЫПОЛНИТЬ СКРИПТ:
+```sh
+sudo -u postgres psql  -f sqltest.sql
+```
 1. Connect to PostgreSQL:
 ```sh
 sudo -u postgres psql
