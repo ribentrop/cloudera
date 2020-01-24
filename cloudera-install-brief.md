@@ -1,6 +1,6 @@
 ### Prerequisites
-0.
-``sh
+0. Install wget
+```sh
 yum install wget -y
 ```
 1. The installation was made om CentOS Linux release 7.7.1908.
