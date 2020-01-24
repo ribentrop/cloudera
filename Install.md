@@ -12,7 +12,7 @@ vi /etc/ssh/sshd_config
 change “PermitRootLogin” to “yes”
 change “PasswordAuthentication” to “yes”
 service sshd restart
-пароль: ZFkmaf22131980004$
+пароль: ПАРОЛЬ
 ```
 ### Ports
 Просто открыл порты на CLOWD
