@@ -1,4 +1,8 @@
 ### Prerequisites
+0.
+``sh
+yum install wget -y
+```
 1. The installation was made om CentOS Linux release 7.7.1908.
 2. Disable Firewall for ports 7180,8888 TCP ports.
 3. The installation was made under 'root'.
@@ -8,15 +12,15 @@
 ```sh
 yum update -y
 ```
-### Step 1: Configure a Repository for Cloudera Manager
+### Step 1: Configure a Repository for Cloudera Manager 
 ```sh
 yum install wget -y
-sudo wget https://archive.cloudera.com/cm6/6.3.1/redhat7/yum/cloudera-manager.repo -P /etc/yum.repos.d/
-sudo rpm --import https://archive.cloudera.com/cm6/6.3.1/redhat7/yum/RPM-GPG-KEY-cloudera
+wget https://archive.cloudera.com/cm6/6.3.1/redhat7/yum/cloudera-manager.repo -P /etc/yum.repos.d/
+rpm --import https://archive.cloudera.com/cm6/6.3.1/redhat7/yum/RPM-GPG-KEY-cloudera
 ```
 ### Step 2: Install JDK
 ```sh
-sudo yum install oracle-j2sdk1.8 # Install JDK -y
+yum install oracle-j2sdk1.8 -y
 ```
 ### Step 3: Install Cloudera Manager Packages
 On the Cloudera Manager Server host, type the following commands to install the Cloudera Manager packages.
@@ -35,16 +39,34 @@ If you are installing or upgrading to CDH 6 and using PostgreSQL for the Hue dat
 ```sh
 yum install python-pip -y
 ```
+If "No package python-pip available" then:
+```sh
+yum --enablerepo=extras install epel-release
+```
 2. Install psycopg2 2.7.5 using pip:
 ```sh
 pip install psycopg2==2.7.5 --ignore-installed 
 ```
+If message like this is shown:
+```sh
+You are using pip version 8.1.2, however version 20.0.1 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command.
+```
+Then:
+```sh
+pip install --upgrade pip
+```
+
 #### Configuring and Starting the PostgreSQL Server
 By default, PostgreSQL only accepts connections on the loopback interface. You must reconfigure PostgreSQL to accept connections from the fully qualified domain names (FQDN) of the hosts hosting the services for which you are configuring databases. If you do not make these changes, the services cannot connect to and use the database on which they depend.
 1. Make sure that LC_ALL is set to en_US.UTF-8 and initialize the database as follows:
 ```sh
 echo 'LC_ALL="en_US.UTF-8"' >> /etc/locale.conf
 sudo su -l postgres -c "postgresql-setup initdb"
+```
+The output should be like this:
+```sh
+Initializing database ... OK
 ```
 2. Enable MD5 authentication. 
 Edit pg_hba.conf.
@@ -60,7 +82,6 @@ If the default pg_hba.conf file contains the following line:
 host all all 127.0.0.1/32 ident
 ```
 then the host line specifying md5 authentication shown above must be inserted before this ident line.
-
 
 Allow remote connections:
 ```sh
@@ -106,6 +127,11 @@ CREATE DATABASE navms OWNER navms ENCODING 'UTF8';
 CREATE ROLE oozie LOGIN PASSWORD 'oozie';
 CREATE DATABASE oozie OWNER oozie ENCODING 'UTF8';
 ```
+You can execute a sql script  the following way
+```sh
+[root@localhost ~]# sudo -u postgres psql
+postgres=# \i /tmp/clousera-users-roles.sql;
+```
 3. For PostgreSQL 8.4 and higher, set standard_conforming_strings=off for the Hive Metastore and Oozie databases:
 ```sh
 ALTER DATABASE metastore SET standard_conforming_strings=off;
@@ -116,6 +142,10 @@ ALTER DATABASE oozie SET standard_conforming_strings=off;
 1. Run the scm_prepare_database.sh script on the Cloudera Manager Server host, using the database name, username, and password you created in Step 4
 ```sh
 /opt/cloudera/cm/schema/scm_prepare_database.sh postgresql scm scm scm
+```
+The output is:
+```sh
+All done, your SCM database is configured correctly!
 ```
 2. Remove the embedded PostgreSQL properties file:
 ```sh
