@@ -15,8 +15,8 @@ yum update -y
 7. Prerequisites for OT LAB PROXY installation:
 - make sure the following utilities are configured to use proxy when running from shell script: __yum,wget,curl__
 - make sure the following utilities are not using proxy for the internal lab addresses: __wget,curl__
-- you had better configure NTP server in your lab environment (optional - may be throttled later in CM)
-- you had better make DNS resolution for your lab environment (optional - may be throttled later in CM)
+- RECOMMENDED you had better configure NTP server in your lab environment (optional - may be throttled later in CM)
+- RECOMMENDED you had better make DNS resolution for your lab environment (optional - may be throttled later in CM)
 ### Step 1: Configure a Repository for Cloudera Manager 
 ```sh
 yum install wget -y
