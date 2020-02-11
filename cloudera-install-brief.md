@@ -23,7 +23,7 @@ yum install wget -y
 wget https://archive.cloudera.com/cm6/6.3.1/redhat7/yum/cloudera-manager.repo -P /etc/yum.repos.d/
 rpm --import https://archive.cloudera.com/cm6/6.3.1/redhat7/yum/RPM-GPG-KEY-cloudera
 ```
-### Step 2: Install JDK
+### Step 2: Install JDK (Optionally. You can do it via installer gui later)
 ```sh
 yum install oracle-j2sdk1.8 -y
 ```
